@@ -1,5 +1,8 @@
 
-/Dynamic CMD/CD_Root/autorun.exe
-/Dynamic CMD/CD_Root/lua5.1.dll
-/Dynamic CMD/CD_Root/lua51.dll
-/Dynamic CMD/CD_Root/AutoPlay/autorun.cdd
+/Autosave
+/CD_Root/lua51.dll
+/CD_Root/autorun.exe
+/CD_Root/lua5.1.dll
+/CD_Root/AutoPlay/Audio/Click1.ogg
+/CD_Root/AutoPlay/Audio/High1.ogg
+/CD_Root/AutoPlay/autorun.cdd

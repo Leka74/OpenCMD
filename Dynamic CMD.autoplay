@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.0.4.0</ProductVersion>
+<ProductVersion>8.0.5.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
 <ProductType>Commercial</ProductType>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.0.4.0 (Professional Edition Commercial)</LastSavedVersion>
+<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -63,31 +63,24 @@
 <Tracks/>
 </AudioBGMusic>
 <Globals>
-<Script>CMD = {};
+<Script>-- Define global table.
+CMD = {Stored = {}};
 
-function CMD.Display(text)
-	Name = System.GetUserInfo()
-	if Input.GetText("iDisplay") == "" then
-		Input.SetText("iDisplay", "["..Name.RegOwner.."] "..text);
-	else
-		Input.SetText("iDisplay", Input.GetText("iDisplay").."\r\n["..Name.RegOwner.."] "..text);
-	end
-	Input.ScrollToLine("iDisplay", -1);
-end
+-- Define helper functions.
+dofile("AutoPlay\\Scripts\\class.lua");
+dofile("AutoPlay\\Scripts\\helper.lua");
 
-function System.EndProcess(strProcess)
-	strProcess = String.Lower(strProcess);
-	tblProcesses = System.EnumerateProcesses();
-	for i, strPath in pairs(tblProcesses) do
-	    local strFile = String.SplitPath(strPath);
-	    if (String.Lower(strFile.Filename..strFile.Extension)) == strProcess then
-	        System.TerminateProcess(i);
-	    end
+-- Include commands.
+local Commands = File.Find("AutoPlay\\Commands\\", "*.lua", false, false, nil, nil);
+
+if (Commands) then
+	for K, V in pairs(Commands) do
+		dofile(V);
 	end
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>10</DesignCodeLine>
+<DesignCodeLine>14</DesignCodeLine>
 <DesignCodeCol>3</DesignCodeCol>
 </Globals>
 <Defaults>
@@ -577,80 +570,29 @@ Page.SetFocus("iExecute");</Script>
 <Name>On Key</Name>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 13 then
-	strCommand = String.Lower(Input.GetText("iExecute"));
+	strCommand = Input.GetText("iExecute"):lower();
 	Input.SetText("iExecute", "");
-	if (strCommand ~= "") and (strCommand ~= " ") then
-		if strCommand == "help" then
-			-- Example: help
-			CMD.Display("Command list:\r\ntime - Shows current time\r\ndate - Shows current date\r\nip - Shows your current IP address");
-		elseif strCommand == "time" then
-			-- Example: time
-			CMD.Display("Current time: "..System.GetTime(TIME_FMT_MIL));
-		elseif strCommand == "date" then
-			-- Example: date
-			CMD.Display("Current date: "..System.GetDate(DATE_FMT_EUROPE));
-		elseif String.Left(strCommand, 4) == "say " then
-			-- Example: say I am a Dynamic CMD
-			CMD.Display(String.TrimLeft(strCommand, "say "));
-		elseif strCommand == "ip" then
-			-- Example: ip
-			CMD.Display("Your current IP address is: "..HTTP.Submit("http://uvlabs.co.cc/vikisystem/getip.php", {}, SUBMITWEB_GET, 20, 80, nil, nil));
-		elseif String.Left(strCommand, 7) == "google " then
-			-- Example: google Cookies
-			File.OpenURL("http://www.google.com/search?q="..String.TrimLeft(strCommand, "google "), SW_SHOWNORMAL);
-			CMD.Display("Searching in Google for: "..String.TrimLeft(strCommand, "google "));
-		elseif String.Left(strCommand, 8) == "youtube " then
-			-- Example: youtube 2012
-			File.OpenURL("http://www.youtube.com/results?search_query="..String.TrimLeft(strCommand, "youtube "), SW_SHOWNORMAL);
-			CMD.Display("Searching in Youtube for: "..String.TrimLeft(strCommand, "youtube "));
-		elseif String.Left(strCommand, 13) == "transparency " then
-			if String.TrimLeft(strCommand, "transparency ") == "on" then
-				-- Example: transparency on
-				WinApi.SetWindowTrans(Application.GetWndHandle(), 200);
-				CMD.Display("Transparency enabled.");
-			elseif String.TrimLeft(strCommand, "transparency ") == "off" then
-				-- Example: transparency off
-				WinApi.SetWindowTrans(Application.GetWndHandle(), 255);
-				CMD.Display("Transparency disabled.");
-			elseif String.Left(strCommand, 13) == "transparency " and String.Left(strCommand, 17)  == "transparency set " then
-				-- Example: transparency set 155
-				if String.ToNumber(String.TrimLeft(strCommand, "transparency set ")) &lt; 30 then
-					local askTrans = Dialog.Message("Warning", "Are you sure you want to set the transparency to "..String.TrimLeft(strCommand, "transparency set ").."? This will make the application totally invinsible.", MB_YESNO, MB_ICONEXCLAMATION, MB_DEFBUTTON2);
-					if askTrans == IDYES then
-						WinApi.SetWindowTrans(Application.GetWndHandle(), String.ToNumber(String.TrimLeft(strCommand, "transparency set ")));
-						CMD.Display("Transparency set to: "..String.TrimLeft(strCommand, "transparency set "));
-					end
-				else
-					WinApi.SetWindowTrans(Application.GetWndHandle(), String.ToNumber(String.TrimLeft(strCommand, "transparency set ")));
-					CMD.Display("Transparency set to: "..String.TrimLeft(strCommand, "transparency set "));
-				end
-			else
-				CMD.Display("Transparency: Unknown state.");
-			end
-		elseif String.Left(strCommand, 5) == "open " then
-			-- Example1: open C:\Program Files\Mozilla\firefox.exe
-			-- Example2: open http://google.com
-			File.Open(String.TrimLeft(strCommand, "open "), "", SW_SHOWNORMAL);
-			
-			if (Application.GetLastError() ~= 0) then
-			    CMD.Display(_tblErrorMessages[Application.GetLastError()]);
-			    Application.ExitScript();
-			end
 	
-			local openPath = String.SplitPath(String.TrimLeft(strCommand, "open "));
-			if String.Find(String.TrimLeft(strCommand, "open "), "http", 1, false) ~= -1 then
-				CMD.Display(String.TrimLeft(strCommand, "open ").." is now opened.");
-			else
-				CMD.Display(openPath.Filename..openPath.Extension.." is now opened.");
-			end
-		elseif String.Left(strCommand, 4) == "end " then
-			-- Example: end itunes.exe
-			System.EndProcess(String.TrimLeft(strCommand, "end "));
-			CMD.Display(String.TrimLeft(strCommand, "end ").." process has ended.");
-		elseif strCommand == "exit" or strCommand == "quit" then
-			-- Example: quit
-			Application.Exit(0);
+	local ExplodeArguments, Arguments = String.Explode(" ", strCommand), {};
+	if (Table.Count(ExplodeArguments) &gt; 1) then
+		Arguments = String.Explode(" ", Table.Concat(ExplodeArguments, " ", 2, -1));
+	end
+	
+	strCommand = ExplodeArguments[1]:lower();
+	
+	if (ExplodeArguments[1]) then
+		if (CMD.Stored[strCommand]) then
+			CMD.Stored[strCommand].Function(Arguments);
 		else
+			-- Check aliases.
+			for K, V in pairs(CMD.Stored) do
+				for _, J in pairs(V.Aliases) do
+					if (J == strCommand) then
+						return V.Function(Arguments);
+					end
+				end
+			end
+			
 			CMD.Display("Unknown command.");
 		end
 	end
@@ -660,8 +602,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>53</DesignCodeLine>
-<DesignCodeCol>38</DesignCodeCol>
+<DesignCodeLine>9</DesignCodeLine>
+<DesignCodeCol>42</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
