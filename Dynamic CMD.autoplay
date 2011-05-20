@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
+<ProductVersion>8.0.5.0</ProductVersion>
+<ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
+<IRProductName>AutoPlay Media Studio 8</IRProductName>
+<ProductType>Commercial</ProductType>
+<DocInfo>
+<Title/>
+<Author/>
+<Company/>
+<Copyright>Copyright © 2011</Copyright>
+<URL/>
+<Email/>
+<Comments/>
+<CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
+<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
+</DocInfo>
+<ProjectInfo ToolTipStyle="0">
+<Office2007Theme Theme="5"/>
+<WindowStyles>
+<Width>630</Width>
+<Height>344</Height>
+<WindowTitle>Dynamic CMD</WindowTitle>
+<WindowStyle>0</WindowStyle>
+<FillColor>0</FillColor>
+</WindowStyles>
+<WindowOptions>
+<Movable>1</Movable>
+<AlwaysOnTop>0</AlwaysOnTop>
+<Resizable>1</Resizable>
+<MinWidth>630</MinWidth>
+<MinHeight>344</MinHeight>
+</WindowOptions>
+<TransparentWindow>
+<TransparentImage/>
+<FitTrans>1</FitTrans>
+</TransparentWindow>
+<Icon>
+<UseCustomIcon>0</UseCustomIcon>
+<TaskbarVisibility>0</TaskbarVisibility>
+<IconFile/>
+</Icon>
+<IntroVideo>
+<AllowClickToSkip>1</AllowClickToSkip>
+<MediaWidth>630</MediaWidth>
+<MediaHeight>425</MediaHeight>
+<WindowWidth>630</WindowWidth>
+<WindowHeight>425</WindowHeight>
+<BackgroundColor>16777215</BackgroundColor>
+<MediaMode>1</MediaMode>
+<WindowMode>0</WindowMode>
+<VideoFileName/>
+<UseIntroVideo>0</UseIntroVideo>
+<VideoType>0</VideoType>
+<UseBorder>0</UseBorder>
+<TitleBar>0</TitleBar>
+<TitleBarText/>
+</IntroVideo>
+<AudioBGMusic>
+<ShuffleMode>0</ShuffleMode>
+<Repeat>1</Repeat>
+<BackVolume>255</BackVolume>
+<EffectsVolume>255</EffectsVolume>
+<Tracks/>
+</AudioBGMusic>
+<Globals>
+<Script>-- Define global table.
+CMD = {Stored = {}};
+
+-- Define helper functions.
+dofile("AutoPlay\\Scripts\\class.lua");
+dofile("AutoPlay\\Scripts\\helper.lua");
+
+-- Include commands.
+local Commands = File.Find("AutoPlay\\Commands\\", "*.lua", false, false, nil, nil);
+
+if (Commands) then
+	for K, V in pairs(Commands) do
+		dofile(V);
+	end
+end</Script>
+<BookMarks count="0">
+</BookMarks>
+<DesignCodeLine>14</DesignCodeLine>
+<DesignCodeCol>3</DesignCodeCol>
+</Globals>
+<Defaults>
+<StartupPage>_PageFirst</StartupPage>
+<MouseOverSoundDefault>AutoPlay\Audio\High1.ogg</MouseOverSoundDefault>
+<MouseClickSoundDefault>AutoPlay\Audio\Click1.ogg</MouseClickSoundDefault>
+<MemMngMethod>0</MemMngMethod>
+<UserPrivilegeLevel>0</UserPrivilegeLevel>
+</Defaults>
+<TargetMedia>
+<TargetMediaSize>4</TargetMediaSize>
+<CustomSize>0</CustomSize>
+</TargetMedia>
+<Group>
+<CurrentGrounp>0</CurrentGrounp>
+</Group>
+<ActionPlugins>
+<Plugin>WinApi\WinApi.lmd</Plugin>
+</ActionPlugins>
+<TemplateInfo>
+<Name/>
+<Author/>
+<Contact/>
+<Web/>
+<Copyright>Copyright © 2011</Copyright>
+<Desc/>
+<Categories>General</Categories>
+<Picture/>
+</TemplateInfo>
+<ReadOrder>
+<RTLReadOrder>0</RTLReadOrder>
+</ReadOrder>
+<CodeSigning>
+<CodeSignLocation/>
+<CodeSignCertificateFile/>
+<CodeSignPVKFile/>
+<CodeSignTimeStampURL/>
+<CodeSignDescription/>
+<CodeSignDescriptionURL/>
+<CodeSignApps>0</CodeSignApps>
+<CodeSigningTool>0</CodeSigningTool>
+<Arguments/>
+</CodeSigning>
+<RuntimeSkin>
+<UseSkinFile>0</UseSkinFile>
+<SkinFilename/>
+<SkinSubStyle/>
+</RuntimeSkin>
+<Databases>
+<MySQL>0</MySQL>
+<SQLite3>0</SQLite3>
+<Oracle>0</Oracle>
+<ODBC>0</ODBC>
+<PostgreSQL>0</PostgreSQL>
+</Databases>
+<Event>
+<Name>On Startup</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>608061171</DesignCodeLine>
+<DesignCodeCol>1765591739</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Shutdown</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>-231830641</DesignCodeLine>
+<DesignCodeCol>-414236994</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script>Input.SetSize("iDisplay", e_PageWidth+21,  e_PageHeight-20);
+Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>-180369121</DesignCodeLine>
+<DesignCodeCol>-188782289</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>-2102659249</DesignCodeLine>
+<DesignCodeCol>-375561684</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<EXEResourceInfo>
+<ReplaceIcon>0</ReplaceIcon>
+<IconFilename/>
+<ReplaceVersionInfo>0</ReplaceVersionInfo>
+<FileVer1>1</FileVer1>
+<FileVer2>0</FileVer2>
+<FileVer3>0</FileVer3>
+<FileVer4>0</FileVer4>
+<ProductVer1>1</ProductVer1>
+<ProductVer2>0</ProductVer2>
+<ProductVer3>0</ProductVer3>
+<ProductVer4>0</ProductVer4>
+<Comments>Created with AutoPlay Media Studio</Comments>
+<Company>Indigo Rose Corporation</Company>
+<FileDescription>AutoPlay Application</FileDescription>
+<LegalCopyright>Runtime Engine Copyright © 2011 Indigo Rose Corporation (www.indigorose.com)</LegalCopyright>
+<LegalTrademarks>AutoPlay Media Studio is a Trademark of Indigo Rose Corporation</LegalTrademarks>
+<PrivateBuild/>
+<ProductName>AutoPlay Media Studio Runtime</ProductName>
+<SpecialBuild/>
+</EXEResourceInfo>
+<HGuidelines/>
+<VGuidelines/>
+<MenuBar>
+<Enabled>0</Enabled>
+<UseIcons>0</UseIcons>
+<BitmapIconFile/>
+<TransColor format="hex">ffffff</TransColor>
+<MenuItem>
+<Text>Main Menu &amp;1</Text>
+<ID>100</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu>
+<MenuItem>
+<Text>Sub Menu &amp;1</Text>
+<ID>101</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu/>
+<IconID>-1</IconID>
+</MenuItem>
+<MenuItem>
+<Text>Sub Menu &amp;2</Text>
+<ID>102</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu/>
+<IconID>-1</IconID>
+</MenuItem>
+</SubMenu>
+<IconID>-1</IconID>
+</MenuItem>
+<MenuItem>
+<Text>Main Menu &amp;2</Text>
+<ID>200</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu>
+<MenuItem>
+<Text>Sub Menu &amp;1</Text>
+<ID>201</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu/>
+<IconID>-1</IconID>
+</MenuItem>
+<MenuItem>
+<Text>Sub Menu &amp;2</Text>
+<ID>202</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu/>
+<IconID>-1</IconID>
+</MenuItem>
+</SubMenu>
+<IconID>-1</IconID>
+</MenuItem>
+</MenuBar>
+</ProjectInfo>
+<Page>
+<Name>pDashboard</Name>
+<InheritObs/>
+<InheritBG/>
+<Description/>
+<Keywords/>
+<Background>
+<Type>0</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename/>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script>CMD.Display("dCMD 0.1 loaded.");
+Page.SetFocus("iExecute");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Menu</Name>
+<Args>number e_ID, table e_ItemInfo</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Object>
+<Type>7</Type>
+<Name>iDisplay</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>12</AutoResize>
+<Coordinates>
+<Top>0</Top>
+<Bottom>324</Bottom>
+<Left>0</Left>
+<Right>648</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body/>
+<TextColor>16777215</TextColor>
+<BackgroundColor>0</BackgroundColor>
+<FontData>
+<FontName>Courier New</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-12</Height>
+<Weight>700</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>1</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>1</ReadOnly>
+</Box>
+</Object>
+<Object>
+<Type>7</Type>
+<Name>iExecute</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>12</AutoResize>
+<Coordinates>
+<Top>323</Top>
+<Bottom>343</Bottom>
+<Left>0</Left>
+<Right>631</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script>if e_Key == 13 then
+	strCommand = Input.GetText("iExecute"):lower();
+	Input.SetText("iExecute", "");
+	
+	local ExplodeArguments, Arguments = String.Explode(" ", strCommand), {};
+	if (Table.Count(ExplodeArguments) &gt; 1) then
+		Arguments = String.Explode(" ", Table.Concat(ExplodeArguments, " ", 2, -1));
+	end
+	
+	strCommand = ExplodeArguments[1]:lower();
+	
+	if (ExplodeArguments[1]) then
+		if (CMD.Stored[strCommand]) then
+			CMD.Stored[strCommand].Function(Arguments);
+		else
+			-- Check aliases.
+			for K, V in pairs(CMD.Stored) do
+				for _, J in pairs(V.Aliases) do
+					if (J == strCommand) then
+						return V.Function(Arguments);
+					end
+				end
+			end
+			
+			CMD.Display("Unknown command.");
+		end
+	end
+end</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>9</DesignCodeLine>
+<DesignCodeCol>42</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Focus</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Char</Name>
+<Args>number e_Char, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body/>
+<TextColor>16777215</TextColor>
+<BackgroundColor>0</BackgroundColor>
+<FontData>
+<FontName>Courier New</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-11</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<RightToLeftReadingOrder>0</RightToLeftReadingOrder>
+</Text>
+<Box>
+<BorderStyle>0</BorderStyle>
+<VerticalScrollbar>1</VerticalScrollbar>
+<HorizontalScrollbar>0</HorizontalScrollbar>
+<Style>0</Style>
+<Mode>0</Mode>
+<Mask/>
+<MaskSymbol> </MaskSymbol>
+<MaskRetMode>0</MaskRetMode>
+<ReadOnly>0</ReadOnly>
+</Box>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+<SugDialogs/>
+<MissingTechs>
+<DlgTitle>Missing Technologies</DlgTitle>
+<DlgMsg>This program requires the following technologies which cannot be located on your system.
+
+Please double-click on each item to find out how to install it.</DlgMsg>
+<BtnAbort>Abort</BtnAbort>
+<BtnCancel>Continue</BtnCancel>
+<BtnHelp>Help</BtnHelp>
+<ShowHelpBtn>0</ShowHelpBtn>
+<HelpURL>http://www.yourdomain.com/help.htm</HelpURL>
+</MissingTechs>
+<ProgramPrefs>
+<OutputFolder/>
+<EXEName>autorun.exe</EXEName>
+<EnableAutoPlayFeatureBTF>1</EnableAutoPlayFeatureBTF>
+<EnableAutoPlayFeatureCDRW>1</EnableAutoPlayFeatureCDRW>
+<EnableAutoPlayFeatureISO>1</EnableAutoPlayFeatureISO>
+<EnableAutoPlayFeatureSFX>0</EnableAutoPlayFeatureSFX>
+<TimeStampFilesBTF>0</TimeStampFilesBTF>
+<TimeStampFilesCDRW>0</TimeStampFilesCDRW>
+<TimeStampFilesISO>0</TimeStampFilesISO>
+<ISOImageFile/>
+<SelfExtractingZIPfile/>
+<ZIPMessage>Loading</ZIPMessage>
+<ZIPShowProgress>1</ZIPShowProgress>
+<CDVolumeIdentifier>NEWDISC</CDVolumeIdentifier>
+<CacheFileData>1</CacheFileData>
+<UseBurnProof>1</UseBurnProof>
+<BuildType>0</BuildType>
+<DriveLetter/>
+<UsePassword>0</UsePassword>
+<OpenFolder>1</OpenFolder>
+<ObscureFilenames>0</ObscureFilenames>
+<ObscureDataFolder>AutoPlay</ObscureDataFolder>
+</ProgramPrefs>
+</DocumentData>
