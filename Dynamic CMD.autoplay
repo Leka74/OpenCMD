@@ -139,7 +139,8 @@ end</Script>
 <Event>
 <Name>On Startup</Name>
 <Args/>
-<Script/>
+<Script>http = require("socket.http");
+socket = require("socket");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>

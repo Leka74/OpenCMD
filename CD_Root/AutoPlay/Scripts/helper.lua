@@ -43,3 +43,8 @@ function String.Explode(Seperator, InputString)
 	
 	return DelimitedTable;
 end
+
+function CMD.HTTPSubmit(link)
+	local linkreturn = http.request(link);
+	return linkreturn
+end
