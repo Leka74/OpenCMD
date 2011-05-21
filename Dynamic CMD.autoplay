@@ -571,29 +571,31 @@ Page.SetFocus("iExecute");</Script>
 <Args>number e_Key, table e_Modifiers</Args>
 <Script>if e_Key == 13 then
 	strCommand = Input.GetText("iExecute"):lower();
-	Input.SetText("iExecute", "");
-	
-	local ExplodeArguments, Arguments = String.Explode(" ", strCommand), {};
-	if (Table.Count(ExplodeArguments) &gt; 1) then
-		Arguments = String.Explode(" ", Table.Concat(ExplodeArguments, " ", 2, -1));
-	end
-	
-	strCommand = ExplodeArguments[1]:lower();
-	
-	if (ExplodeArguments[1]) then
-		if (CMD.Stored[strCommand]) then
-			CMD.Stored[strCommand].Function(Arguments);
-		else
-			-- Check aliases.
-			for K, V in pairs(CMD.Stored) do
-				for _, J in pairs(V.Aliases) do
-					if (J == strCommand) then
-						return V.Function(Arguments);
+	if strCommand ~= "" and strCommand ~= " " then
+		Input.SetText("iExecute", "");
+		
+		local ExplodeArguments, Arguments = String.Explode(" ", strCommand), {};
+		if (Table.Count(ExplodeArguments) &gt; 1) then
+			Arguments = String.Explode(" ", Table.Concat(ExplodeArguments, " ", 2, -1));
+		end
+		
+		strCommand = ExplodeArguments[1]:lower();
+		
+		if (ExplodeArguments[1]) then
+			if (CMD.Stored[strCommand]) then
+				CMD.Stored[strCommand].Function(Arguments);
+			else
+				-- Check aliases.
+				for K, V in pairs(CMD.Stored) do
+					for _, J in pairs(V.Aliases) do
+						if (J == strCommand) then
+							return V.Function(Arguments);
+						end
 					end
 				end
+				
+				CMD.Display("Unknown command.");
 			end
-			
-			CMD.Display("Unknown command.");
 		end
 	end
 end</Script>
@@ -602,8 +604,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>9</DesignCodeLine>
-<DesignCodeCol>42</DesignCodeCol>
+<DesignCodeLine>28</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
