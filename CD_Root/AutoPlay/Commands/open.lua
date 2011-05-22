@@ -15,5 +15,6 @@ CMD.AddCommand("open", "Open a program.", function(Arguments)
 
 	local openPath = String.SplitPath(Table.Concat(Arguments, " ", 1, -1));
 	CMD.Display(openPath.Filename..openPath.Extension.." is now opened.");
-
 end);
+
+CMD.AddAlias("open", "start");
