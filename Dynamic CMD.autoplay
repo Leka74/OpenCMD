@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.0.4.0</ProductVersion>
+<ProductVersion>8.0.5.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
 <ProductType>Commercial</ProductType>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.0.4.0 (Professional Edition Commercial)</LastSavedVersion>
+<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -64,11 +64,32 @@
 </AudioBGMusic>
 <Globals>
 <Script>-- Define global table.
-CMD = {Stored = {}};
+CMD = {Configuration = {Default = {}}, Stored = {}};
 
 -- Define helper functions.
 dofile("AutoPlay\\Scripts\\class.lua");
 dofile("AutoPlay\\Scripts\\helper.lua");
+
+-- Define the default configuration settings.
+CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
+
+-- Attempt to load configuration file.
+if (File.DoesExist("AutoPlay\\config.ini")) then
+	CMD.Configuration.PromptPrefix = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "PromptPrefix");
+	
+	if (CMD.Configuration.PromptPrefix:empty()) then
+		-- Set to default.
+		CMD.Configuration.PromptPrefix = CMD.Configuration.Default.PromptPrefix;
+	end
+else
+	-- Set settings to the default ones.
+	CMD.Configuration.PromptPrefix = CMD.Configuration.Default.PromptPrefix;
+	
+	-- Write default values.
+	for K, V in pairs(CMD.Configuration.Default) do
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", K, V);
+	end
+end
 
 -- Include commands.
 local Commands = File.Find("AutoPlay\\Commands\\", "*.lua", false, false, nil, nil);
@@ -80,8 +101,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>7</DesignCodeLine>
-<DesignCodeCol>6</DesignCodeCol>
+<DesignCodeLine>17</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
