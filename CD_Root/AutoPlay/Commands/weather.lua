@@ -14,12 +14,13 @@ CMD.AddCommand("temperature", "Gives you the temperature of a desired city", fun
 			local xml = http.request("http://www.google.com/ig/api?weather="..Arguments[1]..",%%20"..Arguments[2]);
 			if xml ~= nil then
 				XML.SetXML(xml);
-				TextFile.WriteFromString(_DesktopFolder.."\\MyFile.txt", xml, false);
+				TextFile.WriteFromString(_TempFolder.."\\MyFile.txt", xml, false);
 				local intCelsius = XML.GetAttribute("xml_api_reply/weather/current_conditions/temp_c", "data");
 				if intCelsius ~= "" then
 					Arguments[1] = String.Replace(Arguments[1], "%%20", " ", false);
 					Arguments[2] = String.Replace(Arguments[2], "%%20", " ", false);
 					CMD.Display("The temperature in "..Arguments[1].." is "..intCelsius.." celsius degrees.");
+					File.Delete(_TempFolder.."\\MyFile.txt");
 				else
 					CMD.Display("Invalid City or Country.");
 				end
