@@ -37,7 +37,7 @@
 <Icon>
 <UseCustomIcon>0</UseCustomIcon>
 <TaskbarVisibility>0</TaskbarVisibility>
-<IconFile>AutoPlay\Icons\icon.ico</IconFile>
+<IconFile/>
 </Icon>
 <IntroVideo>
 <AllowClickToSkip>1</AllowClickToSkip>
@@ -66,20 +66,42 @@
 <Script>-- Define global table.
 CMD = {Configuration = {Default = {}}, Stored = {}};
 
+-- Define the default configuration settings.
+CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
+CMD.Configuration.Default.FontFace = "Courier New";
+CMD.Configuration.Default.FontColor = "#FFFFFF";
+
 -- Define helper functions.
 dofile("AutoPlay\\Scripts\\class.lua");
 dofile("AutoPlay\\Scripts\\helper.lua");
 
--- Define the default configuration settings.
-CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
-
 -- Attempt to load configuration file.
 if (File.DoesExist("AutoPlay\\config.ini")) then
+	-- Get all values from INI File.
 	CMD.Configuration.PromptPrefix = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "PromptPrefix");
+	CMD.Configuration.FontFace = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontFace");
+	CMD.Configuration.FontColor = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontColor");
 	
+	-- Go through all the settings, validate each one.
 	if (CMD.Configuration.PromptPrefix:empty()) then
 		-- Set to default.
 		CMD.Configuration.PromptPrefix = CMD.Configuration.Default.PromptPrefix;
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", "PromptPrefix", CMD.Configuration.Default.PromptPrefix);
+	end
+	
+	if (CMD.Configuration.FontFace:empty()) then
+		-- Set to default.
+		CMD.Configuration.FontFace = CMD.Configuration.Default.FontFace;
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", "FontFace", CMD.Configuration.Default.FontFace);
+	end
+	
+	if (CMD.Configuration.FontColor:empty()) then
+		-- Set to default.
+		CMD.Configuration.FontColor = Math.HexColorToNumber(CMD.Configuration.Default.FontColor:sub(2, -1));
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", "FontColor", CMD.Configuration.Default.FontColor);
+	else
+		-- e.g. Turn #FFFFFF into FFFFFF and then convert it into COLORDEF.
+		CMD.Configuration.FontColor = Math.HexColorToNumber(CMD.Configuration.FontColor:sub(2, -1));
 	end
 else
 	-- Set settings to the default ones.
@@ -101,8 +123,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>17</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>26</DesignCodeLine>
+<DesignCodeCol>5</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -160,8 +182,12 @@ end</Script>
 <Event>
 <Name>On Startup</Name>
 <Args/>
-<Script>http = require("socket.http");
-socket = require("socket");</Script>
+<Script>-- Require LuaSocket.
+http = require("socket.http");
+socket = require("socket");
+
+-- Switch window frame to standard border. (removes over-exaggerated border on XP)
+DLL.CallFunction("AutoPlay\\Docs\\ToolWindow.dll", "ToolW", Application.GetWndHandle()..",Normal", DLL_RETURN_TYPE_STRING, DLL_CALL_STDCALL);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -204,7 +230,21 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <Event>
 <Name>On Menu</Name>
 <Args>number e_ID, table e_ItemInfo</Args>
-<Script/>
+<Script>-- Menu handler for item "&amp;Exit Dynamic-CMD.."
+if (e_ID == 2) then
+	Application.Exit(0);
+end
+
+-- Menu handler for item "&amp;Configure Dynamic-CMD.."
+if (e_ID == 5) then
+	Dialog.Message("", "TODO: Add proper settings dialog.", 0, 48, 0);
+	File.Open("AutoPlay\\config.ini");
+end
+
+-- Menu handler for item "&amp;About Dynamic-CMD.."
+if (e_ID == 6) then
+	DialogEx.Show("pHelp");
+end</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -239,27 +279,19 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <HGuidelines/>
 <VGuidelines/>
 <MenuBar>
-<Enabled>0</Enabled>
+<Enabled>1</Enabled>
 <UseIcons>0</UseIcons>
 <BitmapIconFile/>
 <TransColor format="hex">ffffff</TransColor>
 <MenuItem>
-<Text>Main Menu &amp;1</Text>
-<ID>100</ID>
+<Text>&amp;File</Text>
+<ID>1</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
 <SubMenu>
 <MenuItem>
-<Text>Sub Menu &amp;1</Text>
-<ID>101</ID>
-<Enabled>1</Enabled>
-<Checked>0</Checked>
-<SubMenu/>
-<IconID>-1</IconID>
-</MenuItem>
-<MenuItem>
-<Text>Sub Menu &amp;2</Text>
-<ID>102</ID>
+<Text>&amp;Exit Dynamic-CMD..</Text>
+<ID>2</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
 <SubMenu/>
@@ -269,22 +301,31 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <IconID>-1</IconID>
 </MenuItem>
 <MenuItem>
-<Text>Main Menu &amp;2</Text>
-<ID>200</ID>
+<Text>&amp;Tools</Text>
+<ID>4</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
 <SubMenu>
 <MenuItem>
-<Text>Sub Menu &amp;1</Text>
-<ID>201</ID>
+<Text>&amp;Configure Dynamic-CMD..</Text>
+<ID>5</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
 <SubMenu/>
 <IconID>-1</IconID>
 </MenuItem>
+</SubMenu>
+<IconID>-1</IconID>
+</MenuItem>
 <MenuItem>
-<Text>Sub Menu &amp;2</Text>
-<ID>202</ID>
+<Text>&amp;Help</Text>
+<ID>3</ID>
+<Enabled>1</Enabled>
+<Checked>0</Checked>
+<SubMenu>
+<MenuItem>
+<Text>&amp;About Dynamic-CMD..</Text>
+<ID>6</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
 <SubMenu/>
@@ -316,14 +357,15 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <Event>
 <Name>On Preload</Name>
 <Args/>
-<Script/>
+<Script>Input.SetProperties("iDisplay", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
+Input.SetProperties("iExecute", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>62</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -331,15 +373,14 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>CMD.Display("dCMD 0.1 loaded.");
-Page.SetFocus("iExecute");
-</Script>
+Page.SetFocus("iExecute");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>2</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>26</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -693,7 +734,611 @@ end</Script>
 <HGuidelines/>
 <VGuidelines/>
 </Page>
-<SugDialogs/>
+<SugDialogs>
+<PageDialog width="600" height="400" dialog_title="About Dynamic-CMD.." dialog_style="0" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
+<Page>
+<Name>pHelp</Name>
+<InheritObs/>
+<InheritBG/>
+<Description/>
+<Keywords/>
+<Background>
+<Type>0</Type>
+<ImageStyle>0</ImageStyle>
+<TopColor>16711680</TopColor>
+<BottomColor>16777215</BottomColor>
+<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<TransitionEffect/>
+<TransProps/>
+<NormalImage>
+<Filename/>
+</NormalImage>
+</Background>
+<Event>
+<Name>On Preload</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Show</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Close</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Timer</Name>
+<Args>number e_ID</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Audio</Name>
+<Args>number e_Channel, string e_State</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Key</Name>
+<Args>number e_Key, table e_Modifiers</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Button</Name>
+<Args>number e_Type, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Move</Name>
+<Args>number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Mouse Wheel</Name>
+<Args>table e_Flags, number e_Delta, number e_X, number e_Y</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Size</Name>
+<Args>number e_WindowWidth, number e_WindowHeight, number e_DialogWidth, number e_DialogHeight, number e_Type</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Object>
+<Type>3</Type>
+<Name>Icon</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>24</Top>
+<Bottom>72</Bottom>
+<Left>30</Left>
+<Right>78</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1784827648</DesignCodeLine>
+<DesignCodeCol>7627621</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>7077934</DesignCodeLine>
+<DesignCodeCol>10798</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>6060385</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3158064</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<NormalImage>
+<Filename>AutoPlay\Images\1306166039_terminal_prompt.png</Filename>
+<UseTransColor>0</UseTransColor>
+<TransClr>16777215</TransClr>
+<TransTolerance>10</TransTolerance>
+<Opacity>100</Opacity>
+<HTMode>0</HTMode>
+</NormalImage>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>Name</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>1</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>30</Top>
+<Bottom>56</Bottom>
+<Left>88</Left>
+<Right>191</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>File.OpenURL("https://github.com/Leka74/Dynamic-CMD");</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>54</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Dynamic-CMD</Body>
+<NormalColor>3355443</NormalColor>
+<HighlightColor>2147483647</HighlightColor>
+<MouseDownColor>8421504</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Segoe UI</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-15</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>30</Top>
+<Bottom>56</Bottom>
+<Left>88</Left>
+<Right>191</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>1</Type>
+<Name>Authors</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>1</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>52</Top>
+<Bottom>71</Bottom>
+<Left>90</Left>
+<Right>212</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3158064</DesignCodeLine>
+<DesignCodeCol>31073</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3158064</DesignCodeLine>
+<DesignCodeCol>31073</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1819307892</DesignCodeLine>
+<DesignCodeCol>31073</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Text>
+<Body>Leka74 &amp; Shadiku Izayoi</Body>
+<NormalColor>8421504</NormalColor>
+<HighlightColor>8421504</HighlightColor>
+<MouseDownColor>8421504</MouseDownColor>
+<DisabledColor>12632256</DisabledColor>
+<FontData>
+<FontName>Tahoma</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-11</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+<Alignment>0</Alignment>
+<Orientation>0</Orientation>
+<AutoSize>1</AutoSize>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
+<OriginalRect>
+<Top>52</Top>
+<Bottom>71</Bottom>
+<Left>90</Left>
+<Right>212</Right>
+</OriginalRect>
+</Text>
+</Object>
+<Object>
+<Type>20</Type>
+<Name>Close</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>357</Top>
+<Bottom>380</Bottom>
+<Left>505</Left>
+<Right>580</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script>DialogEx.Close(0);</Script>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>18</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Right-Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Hyperlink</Name>
+<Args>string e_Hyperlink</Args>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<Options>
+<Text>Close</Text>
+<TextColor format="hex">000000</TextColor>
+<EnableMarkup>0</EnableMarkup>
+<ButtonImage/>
+<TextAlignment>2</TextAlignment>
+<ImageAlignment>0</ImageAlignment>
+<ImageTextRelation>3</ImageTextRelation>
+<Theme>0</Theme>
+<Style>0</Style>
+<State>0</State>
+<MouseOverSoundMode>0</MouseOverSoundMode>
+<MouseOverSound/>
+<MouseClickSoundMode>0</MouseClickSoundMode>
+<MouseClickSound/>
+</Options>
+<FontData>
+<FontName>Microsoft Sans Serif</FontName>
+<CharacterSet>0</CharacterSet>
+<Height>-11</Height>
+<Weight>400</Weight>
+<Italic>0</Italic>
+<Underline>0</Underline>
+<StrikeOut>0</StrikeOut>
+<AntiAlias>1</AntiAlias>
+</FontData>
+</Object>
+<HGuidelines/>
+<VGuidelines/>
+</Page>
+</PageDialog>
+</SugDialogs>
 <MissingTechs>
 <DlgTitle>Missing Technologies</DlgTitle>
 <DlgMsg>This program requires the following technologies which cannot be located on your system.
