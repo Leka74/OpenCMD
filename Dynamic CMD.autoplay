@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.0.5.0</ProductVersion>
+<ProductVersion>8.0.4.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
 <ProductType>Commercial</ProductType>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
+<LastSavedVersion>8.0.4.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -80,8 +80,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>14</DesignCodeLine>
-<DesignCodeCol>3</DesignCodeCol>
+<DesignCodeLine>7</DesignCodeLine>
+<DesignCodeCol>6</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -316,8 +316,8 @@ Page.SetFocus("iExecute");</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>1</DesignCodeLine>
+<DesignCodeCol>26</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -481,7 +481,7 @@ Page.SetFocus("iExecute");</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>26</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -605,8 +605,8 @@ end</Script>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>28</DesignCodeLine>
-<DesignCodeCol>4</DesignCodeCol>
+<DesignCodeLine>15</DesignCodeLine>
+<DesignCodeCol>7</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
