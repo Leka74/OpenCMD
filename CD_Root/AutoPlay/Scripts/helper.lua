@@ -11,13 +11,23 @@ function CMD.Display(text)
 end
 
 function System.EndProcess(strProcess)
+	local found = false;
 	strProcess = String.Lower(strProcess);
 	tblProcesses = System.EnumerateProcesses();
 	for i, strPath in pairs(tblProcesses) do
-	    local strFile = String.SplitPath(strPath);
-	    if (String.Lower(strFile.Filename..strFile.Extension)) == strProcess then
-	        System.TerminateProcess(i);
-	    end
+		local strFile = String.SplitPath(strPath);
+		if (String.Lower(strFile.Filename..strFile.Extension)) == strProcess then
+	        	local found = true;
+			System.TerminateProcess(i);
+		else
+			local found = false;
+		end
+	end
+	
+	if found then
+		return true
+	else
+		return false
 	end
 end
 

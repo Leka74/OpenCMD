@@ -37,7 +37,7 @@
 <Icon>
 <UseCustomIcon>0</UseCustomIcon>
 <TaskbarVisibility>0</TaskbarVisibility>
-<IconFile/>
+<IconFile>AutoPlay\Icons\icon.ico</IconFile>
 </Icon>
 <IntroVideo>
 <AllowClickToSkip>1</AllowClickToSkip>
@@ -310,14 +310,15 @@ Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
 <Name>On Show</Name>
 <Args/>
 <Script>CMD.Display("dCMD 0.1 loaded.");
-Page.SetFocus("iExecute");</Script>
+Page.SetFocus("iExecute");
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>26</DesignCodeCol>
+<DesignCodeLine>2</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
