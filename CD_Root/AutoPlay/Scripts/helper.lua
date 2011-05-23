@@ -1,10 +1,8 @@
 function CMD.Display(text)
-	local Name = System.GetUserInfo();
-	
 	if (Input.GetText("iDisplay") == "") then
-		Input.SetText("iDisplay", "["..Name.RegOwner.."] "..text);
+		Input.SetText("iDisplay", "["..CMD.Configuration.PromptPrefix.."] "..text);
 	else
-		Input.SetText("iDisplay", Input.GetText("iDisplay").."\r\n["..Name.RegOwner.."] "..text);
+		Input.SetText("iDisplay", Input.GetText("iDisplay").."\r\n["..CMD.Configuration.PromptPrefix.."] "..text);
 	end
 	
 	Input.ScrollToLine("iDisplay", -1);
@@ -52,6 +50,10 @@ function String.Explode(Seperator, InputString)
 	end
 	
 	return DelimitedTable;
+end
+
+function string:empty()
+	return(string.gsub(self, "^%s*(.-)%s*$", "%1") == "");
 end
 
 function CMD.HTTPSubmit(link)
