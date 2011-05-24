@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.0.5.0</ProductVersion>
+<ProductVersion>8.0.4.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
 <ProductType>Commercial</ProductType>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
+<LastSavedVersion>8.0.4.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -35,9 +35,9 @@
 <FitTrans>1</FitTrans>
 </TransparentWindow>
 <Icon>
-<UseCustomIcon>0</UseCustomIcon>
+<UseCustomIcon>1</UseCustomIcon>
 <TaskbarVisibility>0</TaskbarVisibility>
-<IconFile/>
+<IconFile>AutoPlay\Icons\icon.ico</IconFile>
 </Icon>
 <IntroVideo>
 <AllowClickToSkip>1</AllowClickToSkip>
@@ -256,8 +256,8 @@ end</Script>
 </BookMarks>
 </Event>
 <EXEResourceInfo>
-<ReplaceIcon>0</ReplaceIcon>
-<IconFilename/>
+<ReplaceIcon>1</ReplaceIcon>
+<IconFilename>AutoPlay\Icons\1306166039_terminal_prompt-ico.ico</IconFilename>
 <ReplaceVersionInfo>0</ReplaceVersionInfo>
 <FileVer1>1</FileVer1>
 <FileVer2>0</FileVer2>
