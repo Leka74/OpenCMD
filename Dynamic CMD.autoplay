@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?><DocumentData>
-<ProductVersion>8.0.4.0</ProductVersion>
+<ProductVersion>8.0.5.0</ProductVersion>
 <ProductID>{ABF9EF9E-ECF6-4019-8A3E-908A6CFF4D1A}</ProductID>
 <IRProductName>AutoPlay Media Studio 8</IRProductName>
 <ProductType>Commercial</ProductType>
@@ -12,7 +12,7 @@
 <Email/>
 <Comments/>
 <CreatedVersion>8.0.4.0 (Professional Edition Commercial)</CreatedVersion>
-<LastSavedVersion>8.0.4.0 (Professional Edition Commercial)</LastSavedVersion>
+<LastSavedVersion>8.0.5.0 (Professional Edition Commercial)</LastSavedVersion>
 </DocInfo>
 <ProjectInfo ToolTipStyle="0">
 <Office2007Theme Theme="5"/>
@@ -70,6 +70,7 @@ CMD = {Configuration = {Default = {}}, Stored = {}};
 CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
 CMD.Configuration.Default.FontFace = "Courier New";
 CMD.Configuration.Default.FontColor = "#FFFFFF";
+CMD.Configuration.Default.Transparency = 255;
 
 -- Define helper functions.
 dofile("AutoPlay\\Scripts\\class.lua");
@@ -81,6 +82,7 @@ if (File.DoesExist("AutoPlay\\config.ini")) then
 	CMD.Configuration.PromptPrefix = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "PromptPrefix");
 	CMD.Configuration.FontFace = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontFace");
 	CMD.Configuration.FontColor = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontColor");
+	CMD.Configuration.Transparency = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "Transparency");
 	
 	-- Go through all the settings, validate each one.
 	if (CMD.Configuration.PromptPrefix:empty()) then
@@ -103,12 +105,34 @@ if (File.DoesExist("AutoPlay\\config.ini")) then
 		-- e.g. Turn #FFFFFF into FFFFFF and then convert it into COLORDEF.
 		CMD.Configuration.FontColor = Math.HexColorToNumber(CMD.Configuration.FontColor:sub(2, -1));
 	end
-else
-	-- Set settings to the default ones.
-	CMD.Configuration.PromptPrefix = CMD.Configuration.Default.PromptPrefix;
 	
+	if (CMD.Configuration.Transparency:empty()) then
+		-- Set to default.
+		CMD.Configuration.Transparency = Math.HexColorToNumber(CMD.Configuration.Default.FontColor:sub(2, -1));
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", "Transparency", CMD.Configuration.Default.Transparency);
+	else
+		-- Set to default 255 if invalid.
+		local Transparency = String.ToNumber(CMD.Configuration.Transparency);
+		
+		if (Transparency == -1) then
+			CMD.Configuration.Transparency = 255;
+		end
+		
+		if (Transparency &gt; 255) then
+			CMD.Configuration.Transparency = 255;
+		end
+		
+		if (Transparency &lt;= 0) then
+			CMD.Configuration.Transparency = 255;
+		end
+	end
+else
 	-- Write default values.
 	for K, V in pairs(CMD.Configuration.Default) do
+		-- Set session setting to the default.
+		CMD.Configuration[K] = V;
+		
+		-- Write new setting to configuration file.
 		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", K, V);
 	end
 end
@@ -123,8 +147,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>26</DesignCodeLine>
-<DesignCodeCol>5</DesignCodeCol>
+<DesignCodeLine>60</DesignCodeLine>
+<DesignCodeCol>39</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -257,7 +281,7 @@ end</Script>
 </Event>
 <EXEResourceInfo>
 <ReplaceIcon>1</ReplaceIcon>
-<IconFilename>AutoPlay\Icons\1306166039_terminal_prompt-ico.ico</IconFilename>
+<IconFilename>AutoPlay\Icons\icon.ico</IconFilename>
 <ReplaceVersionInfo>0</ReplaceVersionInfo>
 <FileVer1>1</FileVer1>
 <FileVer2>0</FileVer2>
@@ -357,15 +381,19 @@ end</Script>
 <Event>
 <Name>On Preload</Name>
 <Args/>
-<Script>Input.SetProperties("iDisplay", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
-Input.SetProperties("iExecute", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});</Script>
+<Script>-- Set object fonts and colors.
+Input.SetProperties("iDisplay", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
+Input.SetProperties("iExecute", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
+
+-- Set window transparency.
+WinApi.SetWindowTrans(Application.GetWndHandle(), CMD.Configuration.Transparency);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>62</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>31</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
