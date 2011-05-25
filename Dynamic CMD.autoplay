@@ -19,7 +19,7 @@
 <WindowStyles>
 <Width>630</Width>
 <Height>344</Height>
-<WindowTitle>Dynamic CMD</WindowTitle>
+<WindowTitle>OpenCMD</WindowTitle>
 <WindowStyle>0</WindowStyle>
 <FillColor>0</FillColor>
 </WindowStyles>
@@ -314,7 +314,7 @@ end</Script>
 <Checked>0</Checked>
 <SubMenu>
 <MenuItem>
-<Text>&amp;Exit Dynamic-CMD..</Text>
+<Text>&amp;Exit OpenCMD..</Text>
 <ID>2</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
@@ -331,7 +331,7 @@ end</Script>
 <Checked>0</Checked>
 <SubMenu>
 <MenuItem>
-<Text>&amp;Configure Dynamic-CMD..</Text>
+<Text>&amp;Configure OpenCMD..</Text>
 <ID>5</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
@@ -348,7 +348,7 @@ end</Script>
 <Checked>0</Checked>
 <SubMenu>
 <MenuItem>
-<Text>&amp;About Dynamic-CMD..</Text>
+<Text>&amp;About OpenCMD..</Text>
 <ID>6</ID>
 <Enabled>1</Enabled>
 <Checked>0</Checked>
@@ -400,15 +400,15 @@ WinApi.SetWindowTrans(Application.GetWndHandle(), CMD.Configuration.Transparency
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>CMD.Display("dCMD 0.1 loaded.");
+<Script>CMD.Display("OpenCMD 0.1 loaded.");
 Page.SetFocus("iExecute");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>1</DesignCodeLine>
-<DesignCodeCol>26</DesignCodeCol>
+<DesignCodeLine>0</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1036,7 +1036,7 @@ end</Script>
 <Top>30</Top>
 <Bottom>56</Bottom>
 <Left>88</Left>
-<Right>191</Right>
+<Right>163</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -1045,14 +1045,14 @@ end</Script>
 <Event>
 <Name>On Click</Name>
 <Args/>
-<Script>File.OpenURL("https://github.com/Leka74/Dynamic-CMD");</Script>
+<Script>File.OpenURL("https://github.com/Leka74/OpenCMD");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>54</DesignCodeCol>
+<DesignCodeCol>47</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -1098,9 +1098,20 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions/>
+<Actions>
+<Action>
+<Type>0</Type>
+<Name>None</Name>
+<Exit>0</Exit>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+</Action>
+</Actions>
 <Text>
-<Body>Dynamic-CMD</Body>
+<Body>OpenCMD</Body>
 <NormalColor>3355443</NormalColor>
 <HighlightColor>2147483647</HighlightColor>
 <MouseDownColor>8421504</MouseDownColor>
@@ -1126,7 +1137,7 @@ end</Script>
 <Top>30</Top>
 <Bottom>56</Bottom>
 <Left>88</Left>
-<Right>191</Right>
+<Right>163</Right>
 </OriginalRect>
 </Text>
 </Object>
