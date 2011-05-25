@@ -1,2 +1,3 @@
-h1. Welcome to our open-source project which is temporary named Dynamic-CMD.
-test
+h1. Welcome to OpenCMD
+
+OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadiku.
