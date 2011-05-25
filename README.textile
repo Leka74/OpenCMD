@@ -7,4 +7,5 @@ Example of a command:
 bc. transparency on
 
 And the return would be:
+
 bc. [Leka] Transparency enabled.
