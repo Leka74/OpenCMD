@@ -66,6 +66,10 @@
 <Script>-- Define global table.
 CMD = {Configuration = {Default = {}}, Stored = {}};
 
+-- Define version.
+CMD.MajorVersion = 0;
+CMD.MinorVersion = 2;
+
 -- Define the default configuration settings.
 CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
 CMD.Configuration.Default.FontFace = "Courier New";
@@ -147,8 +151,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>60</DesignCodeLine>
-<DesignCodeCol>39</DesignCodeCol>
+<DesignCodeLine>5</DesignCodeLine>
+<DesignCodeCol>21</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -400,7 +404,7 @@ WinApi.SetWindowTrans(Application.GetWndHandle(), CMD.Configuration.Transparency
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>CMD.Display("OpenCMD 0.1 loaded.");
+<Script>CMD.Display("OpenCMD "..CMD.MajorVersion.."."..CMD.MinorVersion.." loaded.");
 Page.SetFocus("iExecute");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
@@ -408,7 +412,7 @@ Page.SetFocus("iExecute");</Script>
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>20</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
