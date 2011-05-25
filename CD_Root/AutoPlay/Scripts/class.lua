@@ -22,4 +22,17 @@ function CMD.AddAlias(Command, Alias)
 	table.insert(CMD.Stored[Command:lower()].Aliases, Alias);
 end
 
--- TODO: CMD.RemoveAlias
+function CMD.RemoveAlias(Command, Alias)
+	assert(type(Command) == "string", "Argument 1 must be of type string.");
+	assert(type(Alias) == "string", "Argument 2 must be of type string.");
+	assert(type(CMD.Stored[Command:lower()]) == "table", "Command not found.");
+	
+	for K, V in pairs(CMD.Stored[Command:lower()].Aliases) do
+		if (V == Alias) then
+			CMD.Stored[Command:lower()].Aliases[K] = nil;
+			return true;
+		end
+	end
+	
+	return false;
+end
