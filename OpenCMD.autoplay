@@ -765,7 +765,7 @@ end</Script>
 <VGuidelines/>
 </Page>
 <SugDialogs>
-<PageDialog width="600" height="400" dialog_title="About Dynamic-CMD.." dialog_style="0" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
+<PageDialog width="600" height="400" dialog_title="About OpenCMD.." dialog_style="0" movable="1" use_custom_icon="0" custom_icon="" always_on_top="0" resizable="0" min_width="480" min_height="300" fit_custom_mask_to_window="1" custom_mask="">
 <Page>
 <Name>pHelp</Name>
 <InheritObs/>
@@ -1098,18 +1098,7 @@ end</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
-<Actions>
-<Action>
-<Type>0</Type>
-<Name>None</Name>
-<Exit>0</Exit>
-<TreeStates>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-<TreeState>0</TreeState>
-</TreeStates>
-</Action>
-</Actions>
+<Actions/>
 <Text>
 <Body>OpenCMD</Body>
 <NormalColor>3355443</NormalColor>
