@@ -1,3 +1,10 @@
 h1. Welcome to OpenCMD
 
-OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadiku.
+OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadiku. The project is based on Lua and Autoplay Media Studio.
+
+Example of a command:
+
+bc. transparency on
+
+And the return would be:
+bc. [Leka] Transparency enabled.
