@@ -374,8 +374,8 @@ end</Script>
 <Type>0</Type>
 <ImageStyle>0</ImageStyle>
 <TopColor>16711680</TopColor>
-<BottomColor>16777215</BottomColor>
-<UseCustomBackgroundSettings>0</UseCustomBackgroundSettings>
+<BottomColor>0</BottomColor>
+<UseCustomBackgroundSettings>1</UseCustomBackgroundSettings>
 <TransitionEffect/>
 <TransProps/>
 <NormalImage>
@@ -653,7 +653,7 @@ end</Script>
 <MaintainAspectRatio>0</MaintainAspectRatio>
 <Pin>0</Pin>
 <TabIndex>-1</TabIndex>
-<AutoResize>12</AutoResize>
+<AutoResize>14</AutoResize>
 <Coordinates>
 <Top>323</Top>
 <Bottom>343</Bottom>
