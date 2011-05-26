@@ -1,3 +1,7 @@
 h1. Welcome to OpenCMD
 
 OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadiku. The project is based on Lua and Autoplay Media Studio.
+
+h1. How-to
+
+After you run the program, just type help to get the list of all commands.
