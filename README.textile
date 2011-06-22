@@ -5,3 +5,12 @@ OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadi
 h1. How-to
 
 After you run the program, just type help to get the list of all commands.
+
+h1. Download compiled version
+
+You can download the complied version if you don't have the required tools to compile it yourself.
+Version: 0.2
+
+Download:
+
+[[CLICK HERE TO DOWNLOAD|http://solidfiles.com/d/70534/download/]]
