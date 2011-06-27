@@ -1,3 +1,30 @@
 h1. Welcome to OpenCMD
 
 OpenCMD is an open-source project which is mainly maintained by Leka74 and Shadiku. The project is based on Lua and Autoplay Media Studio.
+
+h1. How-to
+
+After you run the program, just type help to get the list of all commands.
+
+h1. Download compiled version
+
+You can download the complied version if you don't have the required tools to compile it yourself.
+Version: 0.2
+
+Download:
+http://solidfiles.com/d/70534/download/
+
+h1. License
+
+OpenCMD is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OpenCMD is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OpenCMD.  If not, see <http://www.gnu.org/licenses/>.
