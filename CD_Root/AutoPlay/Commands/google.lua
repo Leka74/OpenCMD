@@ -8,3 +8,5 @@ CMD.AddCommand("google", "Search in google for something.", function(Arguments)
 		CMD.Display("Syntax missing. Usage: google <text>");
 	end
 end);
+
+CMD.AddAlias("google", "g");

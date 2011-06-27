@@ -8,3 +8,5 @@ CMD.AddCommand("youtube", "Search in youtube for a video.", function(Arguments)
 		CMD.Display("Syntax missing. Usage: youtube <text>");
 	end
 end);
+
+CMD.AddAlias("youtube", "v");

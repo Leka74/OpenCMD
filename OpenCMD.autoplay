@@ -74,6 +74,7 @@ CMD.MinorVersion = 2;
 CMD.Configuration.Default.PromptPrefix = System.GetUserInfo().RegOwner;
 CMD.Configuration.Default.FontFace = "Courier New";
 CMD.Configuration.Default.FontColor = "#FFFFFF";
+CMD.Configuration.Default.LineColor = "#2078d0";
 CMD.Configuration.Default.Transparency = 255;
 
 -- Define helper functions.
@@ -86,6 +87,7 @@ if (File.DoesExist("AutoPlay\\config.ini")) then
 	CMD.Configuration.PromptPrefix = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "PromptPrefix");
 	CMD.Configuration.FontFace = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontFace");
 	CMD.Configuration.FontColor = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "FontColor");
+	CMD.Configuration.LineColor = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "LineColor");
 	CMD.Configuration.Transparency = INIFile.GetValue("AutoPlay\\config.ini", "Configuration", "Transparency");
 	
 	-- Go through all the settings, validate each one.
@@ -108,6 +110,15 @@ if (File.DoesExist("AutoPlay\\config.ini")) then
 	else
 		-- e.g. Turn #FFFFFF into FFFFFF and then convert it into COLORDEF.
 		CMD.Configuration.FontColor = Math.HexColorToNumber(CMD.Configuration.FontColor:sub(2, -1));
+	end
+	
+	if (CMD.Configuration.LineColor:empty()) then
+		-- Set to default.
+		CMD.Configuration.LineColor = Math.HexColorToNumber(CMD.Configuration.Default.LineColor:sub(2, -1));
+		INIFile.SetValue("AutoPlay\\config.ini", "Configuration", "LineColor", CMD.Configuration.Default.LineColor);
+	else
+		-- e.g. Turn #FFFFFF into FFFFFF and then convert it into COLORDEF.
+		CMD.Configuration.LineColor = Math.HexColorToNumber(CMD.Configuration.LineColor:sub(2, -1));
 	end
 	
 	if (CMD.Configuration.Transparency:empty()) then
@@ -151,8 +162,8 @@ if (Commands) then
 end</Script>
 <BookMarks count="0">
 </BookMarks>
-<DesignCodeLine>5</DesignCodeLine>
-<DesignCodeCol>21</DesignCodeCol>
+<DesignCodeLine>59</DesignCodeLine>
+<DesignCodeCol>20</DesignCodeCol>
 </Globals>
 <Defaults>
 <StartupPage>_PageFirst</StartupPage>
@@ -243,8 +254,9 @@ DLL.CallFunction("AutoPlay\\Docs\\ToolWindow.dll", "ToolW", Application.GetWndHa
 <Event>
 <Name>On Size</Name>
 <Args>number e_WindowWidth, number e_WindowHeight, number e_PageWidth, number e_PageHeight, number e_Type</Args>
-<Script>Input.SetSize("iDisplay", e_PageWidth+21,  e_PageHeight-20);
-Input.SetPos("iExecute", 0, e_PageHeight-20);</Script>
+<Script>Input.SetSize("iDisplay", e_PageWidth+8, e_PageHeight-20);
+Input.SetPos("iExecute", 10, e_PageHeight-20);
+Plugin.SetSize("Plugin1", 10, e_PageHeight+1);</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
@@ -389,6 +401,7 @@ end</Script>
 Input.SetProperties("iDisplay", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
 Input.SetProperties("iExecute", {FontColor = CMD.Configuration.FontColor, FontName = CMD.Configuration.FontFace});
 
+
 -- Set window transparency.
 WinApi.SetWindowTrans(Application.GetWndHandle(), CMD.Configuration.Transparency);</Script>
 <TreeStates>
@@ -397,22 +410,26 @@ WinApi.SetWindowTrans(Application.GetWndHandle(), CMD.Configuration.Transparency
 <TreeState>0</TreeState>
 </TreeStates>
 <DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>31</DesignCodeCol>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
 <Event>
 <Name>On Show</Name>
 <Args/>
-<Script>CMD.Display("OpenCMD "..CMD.MajorVersion.."."..CMD.MinorVersion.." loaded.");
+<Script>-- Set object fonts and colors.
+Shape.SetFillColor("Plugin1", CMD.Configuration.LineColor);
+
+-- Show the loaded message
+CMD.Display("OpenCMD "..CMD.MajorVersion.."."..CMD.MinorVersion.." loaded.");
 Page.SetFocus("iExecute");</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>0</DesignCodeLine>
-<DesignCodeCol>0</DesignCodeCol>
+<DesignCodeLine>3</DesignCodeLine>
+<DesignCodeCol>26</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -559,8 +576,8 @@ Page.SetFocus("iExecute");</Script>
 <Coordinates>
 <Top>0</Top>
 <Bottom>324</Bottom>
-<Left>0</Left>
-<Right>648</Right>
+<Left>11</Left>
+<Right>647</Right>
 </Coordinates>
 <Ratios>
 <WidthRatio>-1.000000</WidthRatio>
@@ -656,8 +673,8 @@ end</Script>
 <AutoResize>14</AutoResize>
 <Coordinates>
 <Top>323</Top>
-<Bottom>343</Bottom>
-<Left>0</Left>
+<Bottom>344</Bottom>
+<Left>10</Left>
 <Right>631</Right>
 </Coordinates>
 <Ratios>
@@ -696,14 +713,15 @@ end</Script>
 			end
 		end
 	end
-end</Script>
+end
+</Script>
 <TreeStates>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 <TreeState>0</TreeState>
 </TreeStates>
-<DesignCodeLine>15</DesignCodeLine>
-<DesignCodeCol>7</DesignCodeCol>
+<DesignCodeLine>30</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -764,6 +782,82 @@ end</Script>
 <MaskRetMode>0</MaskRetMode>
 <ReadOnly>0</ReadOnly>
 </Box>
+</Object>
+<Object>
+<Type>40</Type>
+<Name>Plugin1</Name>
+<VisibleAtDesignTime>1</VisibleAtDesignTime>
+<VisibleAtRunTime>1</VisibleAtRunTime>
+<Locked>0</Locked>
+<Enabled>1</Enabled>
+<ToolTip/>
+<Cursor>0</Cursor>
+<Group>0</Group>
+<MaintainAspectRatio>0</MaintainAspectRatio>
+<Pin>0</Pin>
+<TabIndex>-1</TabIndex>
+<AutoResize>0</AutoResize>
+<Coordinates>
+<Top>0</Top>
+<Bottom>348</Bottom>
+<Left>0</Left>
+<Right>10</Right>
+</Coordinates>
+<Ratios>
+<WidthRatio>-1.000000</WidthRatio>
+<HeightRatio>-1.000000</HeightRatio>
+</Ratios>
+<Event>
+<Name>On Click</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>3158064</DesignCodeLine>
+<DesignCodeCol>11</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Enter</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>5857125</DesignCodeLine>
+<DesignCodeCol>4</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Event>
+<Name>On Leave</Name>
+<Args/>
+<Script/>
+<TreeStates>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+<TreeState>0</TreeState>
+</TreeStates>
+<DesignCodeLine>1193</DesignCodeLine>
+<DesignCodeCol>0</DesignCodeCol>
+<BookMarks count="0">
+</BookMarks>
+</Event>
+<Actions/>
+<PLUGIN>
+<DLLFile>Shape\Shape.apo</DLLFile>
+<CustomData>1,1,13797670,1,0,13662240,7,7</CustomData>
+</PLUGIN>
+<MouseOverSndMode>0</MouseOverSndMode>
+<MouseOverSound/>
+<MouseClickSndMode>0</MouseClickSndMode>
+<MouseClickSound/>
 </Object>
 <HGuidelines/>
 <VGuidelines/>

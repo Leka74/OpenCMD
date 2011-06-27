@@ -3,5 +3,5 @@ CMD.AddCommand("time", "Shows the time.", function()
 end);
 
 CMD.AddCommand("date", "Shows the date.", function()
-	CMD.Display("Current time: "..System.GetDate(DATE_FMT_EUROPE));
+	CMD.Display("Current date: "..System.GetDate(DATE_FMT_EUROPE));
 end);

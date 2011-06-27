@@ -10,3 +10,4 @@ CMD.AddCommand("wikipedia", "Search in wikipedia for something.", function(Argum
 end);
 
 CMD.AddAlias("wikipedia", "wiki");
+CMD.AddAlias("wikipedia", "w");
