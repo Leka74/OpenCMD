@@ -12,7 +12,7 @@ You can download the complied version if you don't have the required tools to co
 Version: 0.2
 
 Download:
-http://solidfiles.com/d/70534/download/
+http://solidfiles.com/d/c7bfa/download/
 
 h1. License
 
