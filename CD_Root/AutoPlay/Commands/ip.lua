@@ -1,10 +1,8 @@
 CMD.AddCommand("ip", "Shows your current public IP address", function()
-	local ip = CMD.HTTPSubmit("http://feeder.dualblue.co.uk/app.php");
+	local ip = CMD.HTTPSubmit("http://uvlabs.x10.mx/ip.php");
 	if ip then
 		CMD.Display("Your current IP address is: "..ip);
 	else
-		CMD.Display("No internet connection detected.");
+		CMD.Display("No internet connection detected or host is down.");
 	end
 end);
-
--- Thanks to Rexzooly for hosting the IP file.
